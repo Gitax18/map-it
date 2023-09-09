@@ -1,0 +1,47 @@
+.bg{
+    background-image: url('../images/map-bg-lg.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    width: 100vw;
+    position: relative;
+    z-index: 0;
+    background-blend-mode: color;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0.35;
+    filter: blur(3px);
+}
+
+
+main{
+    z-index:1;
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.log-in-container{
+    height: 70vh;
+    width: 60vw;
+    background-color: aliceblue;
+    padding: 10rem 4rem 4rem;
+}
+
+#main-icon{
+    height: 10vw;
+    border-radius: 50%;
+    background-color: white;
+    padding: 1rem;
+    border: 2px solid rgba(0, 0, 0, 0.25);
+    aspect-ratio: 1/1;
+    box-sizing: content-box;
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+}
