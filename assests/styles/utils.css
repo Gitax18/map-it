@@ -9,3 +9,33 @@ html{
     font-family: 'Poppins', sans-serif;
 }
 
+:root{
+    --primary:#ffe259;
+    --pri-shd-10: #e6cb50;
+    --pri-tint-20: #ffe87a;
+    --pri-tint-60: #fff3bd;
+
+    --secondary: #ffa751;
+    --sec-shd-10:#e69649;
+    --sec-tint-20:#ffb974;
+    --sec-tint-60:#ffdcb9;
+
+    --gradient-primary: linear-gradient(to bottom right, var(--primary), var(--secondary));
+
+    --gradient-translusent: linear-gradient(to right, rgba(70, 70, 70, 0.65), rgba(121, 121, 121, 0.65));
+}
+
+#btn-submit{
+    color: #fff;
+    padding: .8rem 1.6rem;
+    /* width: 15rem; */
+    margin: 2rem .5rem;
+    height: 4rem;
+    text-transform: capitalize;
+    font-size: 1.6rem;
+    font-weight: 600;
+    background-color: var(--pri-shd-10);
+    border: none;
+    cursor: pointer;
+    border-radius: .8rem;
+}

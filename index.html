@@ -23,7 +23,7 @@
     <main id="main">
         <section class="log-in-container">
             <img src="assests/images/icon.png" alt="icon" id="main-icon">
-            <form id="log-in-form">
+            <form class="log-in-form">
                 <div class="email-placeholder">
                     <label for="email">email:</label>
                     <input type="email" name="email" id="email" placeholder="">
@@ -32,8 +32,12 @@
                     <label for="password">password:</label>
                     <input type="password" name="password" id="password">
                 </div>
-                <button type="submit">login</button>
-                <button id="show-register">Don't have an account?</button>
+                <div class="show-pwd-placeholder">
+                    <label for="show-pwd">show password</label>
+                    <input type="checkbox" name="show-pwd" id="show-pwd">
+                </div>
+                <button type="submit" id="btn-submit">login</button>
+                <button id="link-register">Don't have an account?</button>
             </form>
         </section>
     </main>
