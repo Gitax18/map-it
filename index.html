@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MapIT</title>
+
+    <!-- favicon -->
+    <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+
+    <!-- stylesheets -->
+    <link rel="stylesheet" href="assests/styles/index.css">
+
+    <!-- scripts -->
+    <script type="module" src="assests/scripts/controller.js"></script>
+
+    <!-- google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+
+</head>
+<body>
+    <main>
+        <!-- container for map  -->
+        <section id="map"></section>
+
+        <!-- popup form for map to add place details -->
+        <form  class="popup--form hidden">
+            <img src="assests/images/icon.png" alt="logo" class="form-logo">
+            <div class="title-placeholder placeholder">
+                <label for="title">title :</label>
+                <input type="text" name="title" id="title">
+            </div>
+            <div class="desc-placeholder placeholder">
+                <label for="description">description :</label>
+                <textarea name="description" id="description" cols="30" rows="10"></textarea>
+            </div>
+            <div class="place-image placeholder">
+                <label for="select-image">Select Image :</label>
+                <div class="image">
+
+                </div>
+                <!-- <img src="" alt=""> -->
+                <input type="file" accept="image/jpg image/png" id="select-image"></input>
+            </div>
+            <button type="submit" id="btn-form-sub">submit</button>
+        </form>
+
+    </main>
+</body>
+</html>
