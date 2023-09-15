@@ -17,19 +17,25 @@
 //    reader.readAsDataURL(this.files[0]);
 // })
 
+const form = document.querySelector('.popup--form');
+const formClose = document.querySelector('#close-form');
+// const formSubmit = 
+
+
 class APP{
     #map;
     #mapZoom = 12;
 
     constructor() {
         console.log('hello')
+
         this._getCurrentPosition();
     }
 
     _getCurrentPosition(){
         if(navigator.geolocation){
             navigator.geolocation.getCurrentPosition(this._loadMap.bind(this), failed)
-            
+
             // call back if the user rejects to give location 
             function failed() {
                 alert("Can't access position");
@@ -52,6 +58,18 @@ class APP{
         }).addTo(this.#map);
 
     }
+
+    _showForm(){
+        form.classList.remove('hidden');
+        inputDistance.focus()
+    }
+
+    _hideForm(){
+        form.classList.add('hidden');
+        inputDistance.focus()
+
+    }
+
 }
 
 const app = new APP();
