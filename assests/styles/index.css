@@ -164,6 +164,19 @@ main{
     display: none;
 }
 
+.place-marker .leaflet-popup-content-wrapper{
+    border-left: 5px solid var(--secondary);
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.your-marker .leaflet-popup-content-wrapper{
+    border-left: 5px solid var(--primary);
+    border-top: 5px solid var(--primary);
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
 @media screen and (max-width:445px) {
     .popup--form{
         width: 90%;

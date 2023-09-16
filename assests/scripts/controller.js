@@ -25,9 +25,26 @@ const selectedImage = document.querySelector('.image');
 const selectImageBtn = document.querySelector('#select-image');
 
 console.log(formClose)
-class APP{
+
+
+class Place{
+    constructor(title, desc, imgPath){
+        this.title = title;
+        this.desc = desc;
+        this.imgPath = imgPath;
+    }
+
+    _setDesc(){
+        this.popup_desc = `${this.desc.slice(0, 15)} ...`
+    }
+}
+
+
+class App{
     #map;
     #mapZoom = 12;
+    #mapEvent;
+    #places = [];
 
     constructor() {
         console.log('hello')
@@ -38,6 +55,8 @@ class APP{
         selectedImage.addEventListener('click', ()=>{
             selectImageBtn.click();
         })
+
+
     }
 
     _getCurrentPosition(){
@@ -67,10 +86,23 @@ class APP{
         // adding click event to map
         this.#map.on('click', this._showForm.bind(this));
 
+        // render workout on map as a marker
+        L.marker(coords) // generating marker on clicked coordinates
+        .addTo(this.#map) // adding marker to map
+        .bindPopup(L.popup({ // custominzing popup (i.e. marker)
+            maxWidth: 200,
+            minWidth: 100,
+            className: `your-marker`,
+            autoClose: false,
+            closeOnClick: false,
+        }))
+        .setPopupContent(`You are Here`) // setting inner HTML of the marker
+        .openPopup();
+
     }
 
-    _showForm(){    
-        console.log('hello')
+    _showForm(mapClick){    
+        this.#mapEvent = mapClick;
         form.classList.remove('hidden');
     }
 
@@ -79,7 +111,29 @@ class APP{
         form.classList.add('hidden');
     }
 
+    _newDestination(e){
+        e.preventDefault();
+
+        const {lat, lng} = this.#mapEvent.latlng;
+    }
+
+    _renderMarker(place){
+        // render workout on map as a marker
+        L.marker(place.coords) // generating marker on clicked coordinates
+        .addTo(this.#map) // adding marker to map
+        .bindPopup(L.popup({ // custominzing popup (i.e. marker)
+            maxWidth: 380,
+            minWidth: 100,
+            // className: `${workout.type}-popup`,
+            autoClose: false,
+            closeOnClick: false,
+        }))
+        .setPopupContent(`hello world`) // setting inner HTML of the marker
+        .openPopup();
+    
+      }
+
 }
 
-const app = new APP();
+const app = new App();
 
