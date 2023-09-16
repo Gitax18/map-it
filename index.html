@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="assests/styles/index.css">
 
     <!-- scripts -->
-    <script src="assests/scripts/controller.js"></script>
+    <script defer src="assests/scripts/controller.js"></script>
 
     <!-- leaflet resources -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />    
@@ -29,11 +29,12 @@
 </head>
 <body>
     <main>
-        
         <!-- popup form for map to add place details -->
-        <form  class="popup--form hidden">
-            <ion-icon name="close-circle-outline" id="close-form"></ion-icon>
-            <img src="assests/images/icon.png" alt="logo" class="form-logo">
+        <div class="form-container">
+
+            <form  class="popup--form ">
+                <ion-icon name="close-circle-outline" id="close-form"></ion-icon>
+                <img src="assests/images/icon.png" alt="logo" class="form-logo">
             <div class="title-placeholder placeholder">
                 <label for="title">title :</label>
                 <input type="text" name="title" id="title">
@@ -44,14 +45,15 @@
             </div>
             <div class="place-image placeholder">
                 <label for="select-image">Select Image :</label>
-                <div class="image">
-
+                <div class="image" for="select-image" >
+                    
                 </div>
                 <!-- <img src="" alt=""> -->
                 <input type="file" accept="image/jpg image/png" id="select-image"></input>
             </div>
             <button type="submit" id="btn-form-sub">submit</button>
         </form>
+    </div>
         
         <!-- container for map  -->
         <section id="map"></section>

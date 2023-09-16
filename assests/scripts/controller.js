@@ -16,20 +16,28 @@
 
 //    reader.readAsDataURL(this.files[0]);
 // })
+'use strict';
 
-const form = document.querySelector('.popup--form');
+const form = document.querySelector('.form-container');
 const formClose = document.querySelector('#close-form');
-// const formSubmit = 
+const formSubmit = document.querySelector('#btn-form-sub');
+const selectedImage = document.querySelector('.image');
+const selectImageBtn = document.querySelector('#select-image');
 
-
+console.log(formClose)
 class APP{
     #map;
     #mapZoom = 12;
 
     constructor() {
         console.log('hello')
-
         this._getCurrentPosition();
+
+        formClose.addEventListener('click', this._hideForm);
+        
+        selectedImage.addEventListener('click', ()=>{
+            selectImageBtn.click();
+        })
     }
 
     _getCurrentPosition(){
@@ -50,26 +58,28 @@ class APP{
 
         // loading map on current coords with zoom (here Map zoom is 10)
         this.#map = L.map('map').setView(coords, this.#mapZoom); 
-
         // adding custom map theme to map, known as tile
         L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
           attribution:
           '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-        }).addTo(this.#map);
+        }).addTo(this.#map); 
+
+        // adding click event to map
+        this.#map.on('click', this._showForm.bind(this));
 
     }
 
-    _showForm(){
+    _showForm(){    
+        console.log('hello')
         form.classList.remove('hidden');
-        inputDistance.focus()
     }
 
     _hideForm(){
+        console.log('hello')
         form.classList.add('hidden');
-        inputDistance.focus()
-
     }
 
 }
 
 const app = new APP();
+
