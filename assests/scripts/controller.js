@@ -23,8 +23,7 @@ const formClose = document.querySelector('#close-form');
 const formSubmit = document.querySelector('#btn-form-sub');
 const selectedImage = document.querySelector('.image');
 const selectImageBtn = document.querySelector('#select-image');
-
-console.log(formClose)
+let mapEvent;
 
 
 class Place{
@@ -34,24 +33,24 @@ class Place{
         this.imgPath = imgPath;
     }
 
-    _setDesc(){
-        this.popup_desc = `${this.desc.slice(0, 15)} ...`
+    _setPopupTitle(){
+        this.popup_desc = `${this.title.slice(0, 25)}...`
     }
 }
 
 
 class App{
     #map;
-    #mapZoom = 12;
-    #mapEvent;
+    #mapZoom = 13;
     #places = [];
 
     constructor() {
         console.log('hello')
         this._getCurrentPosition();
 
+        formSubmit.addEventListener('click', this._newPlace);
+
         formClose.addEventListener('click', this._hideForm);
-        
         selectedImage.addEventListener('click', ()=>{
             selectImageBtn.click();
         })
@@ -102,19 +101,21 @@ class App{
     }
 
     _showForm(mapClick){    
-        this.#mapEvent = mapClick;
+        this.mapEvent = mapClick;
+        console.log(this.mapEvent)
         form.classList.remove('hidden');
     }
-
+    
     _hideForm(){
         console.log('hello')
         form.classList.add('hidden');
     }
-
-    _newDestination(e){
+    
+    _newPlace(e){
         e.preventDefault();
-
-        const {lat, lng} = this.#mapEvent.latlng;
+        console.log(this.mapEvent)
+        const {lat, lng} = this.mapEvent.latlng;
+        console.log(lat,lng);
     }
 
     _renderMarker(place){
