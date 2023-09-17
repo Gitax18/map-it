@@ -43,14 +43,17 @@ class App{
     #map;
     #mapZoom = 13;
     #places = [];
-
+    // #mapEvent;
+    
     constructor() {
         console.log('hello')
-        this._getCurrentPosition();
+        this.mapEvent = null;
+        // this._getCurrentPosition.bind(this, );
+        this._getCurrentPosition()
 
-        formSubmit.addEventListener('click', this._newPlace);
+        formSubmit.addEventListener('click', this._newPlace.bind(this));
 
-        formClose.addEventListener('click', this._hideForm);
+        formClose.addEventListener('click', this._hideForm.bind(this));
         selectedImage.addEventListener('click', ()=>{
             selectImageBtn.click();
         })
@@ -59,6 +62,7 @@ class App{
     }
 
     _getCurrentPosition(){
+        console.log(this)
         if(navigator.geolocation){
             navigator.geolocation.getCurrentPosition(this._loadMap.bind(this), failed)
 
@@ -102,20 +106,18 @@ class App{
 
     _showForm(mapClick){    
         this.mapEvent = mapClick;
-        console.log(this.mapEvent)
         form.classList.remove('hidden');
     }
     
     _hideForm(){
-        console.log('hello')
         form.classList.add('hidden');
     }
     
     _newPlace(e){
         e.preventDefault();
-        console.log(this.mapEvent)
         const {lat, lng} = this.mapEvent.latlng;
-        console.log(lat,lng);
+        console.log({lat,lng});
+
     }
 
     _renderMarker(place){
