@@ -129,7 +129,7 @@ main{
     background-color: #444;
     /* background-image: url('../images/select\ icon.jpg'); */
     background-image: url('../images/t1.png');
-    background-size: contain;
+    background-size: cover;
     background-repeat: no-repeat;
     position: relative;
     border-radius: calc(1.6rem - 5%);

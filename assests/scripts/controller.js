@@ -23,6 +23,9 @@ const formClose = document.querySelector('#close-form');
 const formSubmit = document.querySelector('#btn-form-sub');
 const selectedImage = document.querySelector('.image');
 const selectImageBtn = document.querySelector('#select-image');
+const imageInput = document.querySelector('#select-image');
+const image_holder = document.querySelector('.image');
+let imageReaderURL = '';
 let mapEvent;
 
 
@@ -43,26 +46,30 @@ class App{
     #map;
     #mapZoom = 13;
     #places = [];
-    // #mapEvent;
+    #mapEvent;
     
     constructor() {
-        console.log('hello')
-        this.mapEvent = null;
-        // this._getCurrentPosition.bind(this, );
+
         this._getCurrentPosition()
+
+        // creating temporary image URL
+        const imageReaderURL = ""; 
 
         formSubmit.addEventListener('click', this._newPlace.bind(this));
 
+        // creating input for user
+        imageInput.addEventListener('change', this._takingImageInput)
+
+        // closing the form
         formClose.addEventListener('click', this._hideForm.bind(this));
+
+        // selecting image on clicking it
         selectedImage.addEventListener('click', ()=>{
             selectImageBtn.click();
         })
-
-
     }
 
     _getCurrentPosition(){
-        console.log(this)
         if(navigator.geolocation){
             navigator.geolocation.getCurrentPosition(this._loadMap.bind(this), failed)
 
@@ -112,12 +119,23 @@ class App{
     _hideForm(){
         form.classList.add('hidden');
     }
+
+    _takingImageInput(){
+        const reader = new FileReader();
+        reader.addEventListener('load', ()=>{
+            imageReaderURL = reader.result;
+            console.log(imageReaderURL)
+            image_holder.style.backgroundImage = `url(${imageReaderURL})`;
+        })
+        reader.readAsDataURL(this.files[0]);
+    }
     
     _newPlace(e){
         e.preventDefault();
         const {lat, lng} = this.mapEvent.latlng;
-        console.log({lat,lng});
-
+        const title = document.querySelector('#title').value;
+        const desc = document.querySelector('#description').value;
+        
     }
 
     _renderMarker(place){
