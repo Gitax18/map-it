@@ -102,7 +102,7 @@ class App{
         .bindPopup(L.popup({ // custominzing popup (i.e. marker)
             maxWidth: 200,
             minWidth: 100,
-            className: `your-marker`,
+            className: 'your-marker',
             autoClose: false,
             closeOnClick: false,
         }))
@@ -145,7 +145,7 @@ class App{
         .bindPopup(L.popup({ // custominzing popup (i.e. marker)
             maxWidth: 380,
             minWidth: 100,
-            // className: `${workout.type}-popup`,
+            className: 'place-marker',
             autoClose: false,
             closeOnClick: false,
         }))
