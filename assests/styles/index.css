@@ -165,6 +165,14 @@ main{
     display: none;
 }
 
+.marker-title{
+    font-size: 1.6rem;
+}
+
+.marker-title::first-letter{
+    text-transform: capitalize;
+}
+
 .place-marker .leaflet-popup-content-wrapper{
     border-left: 5px solid var(--secondary);
     font-size: 1.2rem;

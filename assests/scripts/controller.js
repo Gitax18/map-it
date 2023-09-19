@@ -13,7 +13,7 @@ let mapEvent;
 
 class Place{
     constructor(lat,lng,title, desc, imgPath){
-        this.latlng = [lat, lng]
+        this.coords = [lat, lng]
         this.title = title;
         this.desc = desc;
         this.imgPath = imgPath;
@@ -140,6 +140,20 @@ class App{
         image_holder.style.backgroundImage = `url('assests/images/t1.png')`;
 
         this._hideForm()
+        this.#places.forEach(place => this._renderMarker(place));
+    }
+
+    // method to create custom marker popup 
+    _createMarkerTitle(place){
+        console.log((place.desc).length)
+        let desc;
+        if (place.desc.length > 15) desc = (place.desc).slice(0,15) + '...'
+        else desc = place.desc 
+        const html = `
+            <h1 class="marker-title">${place.title}</h1>
+            <p>${desc}</p>
+        `
+        return html
     }
 
     // method to generate new marker on the map
@@ -154,7 +168,8 @@ class App{
             autoClose: false,
             closeOnClick: false,
         }))
-        .setPopupContent(`hello world`) // setting inner HTML of the marker
+        .setPopupContent(place.title) // setting inner HTML of the marker
+        .setPopupContent(this._createMarkerTitle(place)) // setting inner HTML of the marker
         .openPopup();
       }
 }
