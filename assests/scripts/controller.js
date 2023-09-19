@@ -104,7 +104,7 @@ class App{
         });
         
     }
-    
+
     // method to make form visible
     _showForm(mapClick){    
         this.mapEvent = mapClick;
@@ -159,14 +159,24 @@ class App{
 
     // method to create custom marker popup 
     _createMarkerTitle(place){
-        console.log((place.desc).length)
-        let desc;
+        let desc, html;
+
         if (place.desc.length > 15) desc = (place.desc).slice(0,15) + '...'
-        else desc = place.desc 
-        const html = `
-            <h1 class="marker-title">${place.title}</h1>
-            <p>${desc}</p>
-        `
+        else desc = place.desc;
+
+        if(place.imgPath != ''){
+            html = `
+                <h1 class="marker-title">${place.title}</h1>
+                <p>${desc}</p>
+                <div class="marker-image" style="background: url(${place.imgPath});"></div>
+            `
+        }else{
+            html = `
+                <h1 class="marker-title">${place.title}</h1>
+                <p>${desc}</p>
+            `
+        }
+        
         return html
     }
 
