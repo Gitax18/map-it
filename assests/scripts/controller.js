@@ -1,21 +1,3 @@
-// INPUTING IMAGE IN FORM *********************************
-// const input = document.querySelector('#select-image')
-// const image_holder = document.querySelector('.image')
-// let image = '';
-
-// console.log(input)
-// console.log(image_holder)
-
-// input.addEventListener('change', function(){
-//    const reader = new FileReader();
-//    reader.addEventListener('load', ()=>{
-//         image = reader.result;
-//         console.log(image)
-//         image_holder.style.backgroundImage = `url(${image})`;
-//    })
-
-//    reader.readAsDataURL(this.files[0]);
-// })
 'use strict';
 
 const form = document.querySelector('.form-container');
@@ -50,7 +32,6 @@ class App{
     #mapEvent;
     
     constructor() {
-
         this._getCurrentPosition()
 
         // creating temporary image URL
@@ -112,16 +93,19 @@ class App{
 
     }
 
+    // method to make form visible
     _showForm(mapClick){    
         this.mapEvent = mapClick;
         form.classList.remove('hidden');
         document.querySelector('#title').focus();
     }
     
+    // method to make form invisible
     _hideForm(){
         form.classList.add('hidden');
     }
-
+    
+    // method to convert inputed image into base64 format to store it easily
     _takingImageInput(){
         const reader = new FileReader();
         reader.addEventListener('load', ()=>{
@@ -130,7 +114,9 @@ class App{
         })
         reader.readAsDataURL(this.files[0]);
     }
-    
+
+
+    // method to create new place object on submitting form
     _newPlace(e){
         e.preventDefault();
         let place;
@@ -143,11 +129,9 @@ class App{
             return 
         }
 
-        if(imageReaderURL === ''){
-            place = new Place(lat, lng, title.value, desc.value, '');
-        } else{
-            place = new Place(lat, lng, title.value, desc.value, imageReaderURL);
-        }
+        if(imageReaderURL === '') place = new Place(lat, lng, title.value, desc.value, '');
+        else place = new Place(lat, lng, title.value, desc.value, imageReaderURL);
+        
 
         this.#places.push(place);
         console.log(this.#places);
@@ -158,6 +142,7 @@ class App{
         this._hideForm()
     }
 
+    // method to generate new marker on the map
     _renderMarker(place){
         // render workout on map as a marker
         L.marker(place.coords) // generating marker on clicked coordinates
@@ -171,10 +156,8 @@ class App{
         }))
         .setPopupContent(`hello world`) // setting inner HTML of the marker
         .openPopup();
-    
       }
-
 }
 
+// creating new app
 const app = new App();
-
