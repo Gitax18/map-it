@@ -9,6 +9,7 @@ const imageInput = document.querySelector('#select-image');
 const image_holder = document.querySelector('.image');
 let imageReaderURL = '';
 let mapEvent;
+let yourLocation;
 
 
 class Place{
@@ -49,8 +50,9 @@ class App{
         selectedImage.addEventListener('click', ()=>{
             selectImageBtn.click();
         })
-    }
 
+    }
+    
     _getCurrentPosition(){
         if(navigator.geolocation){
             navigator.geolocation.getCurrentPosition(this._loadMap.bind(this), failed)
@@ -66,20 +68,20 @@ class App{
         // retreiving coordinates for position object
         const { latitude, longitude } = position.coords;
         const coords = [latitude, longitude]; // converting coords to array
-
+        
         // loading map on current coords with zoom (here Map zoom is 10)
         this.#map = L.map('map').setView(coords, this.#mapZoom); 
         // adding custom map theme to map, known as tile
         L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
-          attribution:
-          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            attribution:
+            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         }).addTo(this.#map); 
-
+        
         // adding click event to map
         this.#map.on('click', this._showForm.bind(this));
-
+        
         // render workout on map as a marker
-        L.marker(coords) // generating marker on clicked coordinates
+        yourLocation = L.marker(coords) // generating marker on clicked coordinates
         .addTo(this.#map) // adding marker to map
         .bindPopup(L.popup({ // custominzing popup (i.e. marker)
             maxWidth: 200,
@@ -91,8 +93,18 @@ class App{
         .setPopupContent(`You are Here`) // setting inner HTML of the marker
         .openPopup();
 
-    }
+        // add event listner on your location
+        yourLocation.on('click', ()=>{
+            const title = prompt('add new title: ');
+            const desc = prompt('add new desc: ');
 
+            const newCurrMarker = new Place(coords[0],coords[1], title, desc, '');
+        
+            yourLocation.setPopupContent(this._createMarkerTitle(newCurrMarker)).openPopup();
+        });
+        
+    }
+    
     // method to make form visible
     _showForm(mapClick){    
         this.mapEvent = mapClick;
@@ -140,7 +152,9 @@ class App{
         image_holder.style.backgroundImage = `url('assests/images/t1.png')`;
 
         this._hideForm()
+
         this.#places.forEach(place => this._renderMarker(place));
+        this.#map.setView(place.coords, this.#mapZoom)
     }
 
     // method to create custom marker popup 
