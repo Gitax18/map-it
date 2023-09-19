@@ -30,7 +30,8 @@ let mapEvent;
 
 
 class Place{
-    constructor(title, desc, imgPath){
+    constructor(lat,lng,title, desc, imgPath){
+        this.latlng = [lat, lng]
         this.title = title;
         this.desc = desc;
         this.imgPath = imgPath;
@@ -114,6 +115,7 @@ class App{
     _showForm(mapClick){    
         this.mapEvent = mapClick;
         form.classList.remove('hidden');
+        document.querySelector('#title').focus();
     }
     
     _hideForm(){
@@ -124,7 +126,6 @@ class App{
         const reader = new FileReader();
         reader.addEventListener('load', ()=>{
             imageReaderURL = reader.result;
-            console.log(imageReaderURL)
             image_holder.style.backgroundImage = `url(${imageReaderURL})`;
         })
         reader.readAsDataURL(this.files[0]);
@@ -132,10 +133,29 @@ class App{
     
     _newPlace(e){
         e.preventDefault();
-        const {lat, lng} = this.mapEvent.latlng;
-        const title = document.querySelector('#title').value;
-        const desc = document.querySelector('#description').value;
+        let place;
+        let {lat, lng} = this.mapEvent.latlng;
+        const title = document.querySelector('#title');
+        const desc = document.querySelector('#description');
         
+        if(title.value === '' || desc.value === ''){
+            alert('Please fill form correctly')
+            return 
+        }
+
+        if(imageReaderURL === ''){
+            place = new Place(lat, lng, title.value, desc.value, '');
+        } else{
+            place = new Place(lat, lng, title.value, desc.value, imageReaderURL);
+        }
+
+        this.#places.push(place);
+        console.log(this.#places);
+        title.value = desc.value =  lat = lng = '';
+
+        image_holder.style.backgroundImage = `url('assests/images/t1.png')`;
+
+        this._hideForm()
     }
 
     _renderMarker(place){
