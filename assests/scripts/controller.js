@@ -9,6 +9,7 @@ const descLimitIndicater = document.querySelector('#current-length');
 const formClose = document.querySelector('#close-form');
 const formSubmit = document.querySelector('#btn-form-sub');
 const imageInput = document.querySelector('#select-image');
+const myCurLocation = document.querySelector('#icon-location');
 
 let imageReaderURL = '';
 let mapEvent;
@@ -40,9 +41,6 @@ class App{
     constructor() {
         this._getCurrentPosition()
 
-        // creating temporary image URL
-        // let imageReaderURL = ""; 
-
         formSubmit.addEventListener('click', this._newPlace.bind(this));
 
         // creating input for user
@@ -50,6 +48,10 @@ class App{
 
         // closing the form
         formClose.addEventListener('click', this._hideForm.bind(this));
+
+        // moving map to your current location
+        const yourLoc = JSON.parse(localStorage.getItem('current-coords'))
+        myCurLocation.addEventListener('click', this._moveToMarker.bind(this,yourLoc))
 
         // selecting image on clicking it
         image_holder.addEventListener('click', ()=>{
@@ -76,6 +78,7 @@ class App{
         
         // loading map on current coords with zoom (here Map zoom is 10)
         this.#map = L.map('map').setView(coords, this.#mapZoom); 
+
         // adding custom map theme to map, known as tile
         L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
             attribution:
@@ -106,7 +109,9 @@ class App{
             const title = prompt('add new title: ');
             const desc = prompt('add new desc: ');
 
-            const newCurrMarker = new Place(coords[0],coords[1], title, desc, '');
+            const date = new Date()
+            const dt = `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,0)}-${date.getDate()}` ;
+            const newCurrMarker = new Place(coords[0],coords[1], title, desc, '',dt);
         
             yourLocation.setPopupContent(this._createMarkerTitle(newCurrMarker)).openPopup();
         });
@@ -226,7 +231,11 @@ class App{
         .setPopupContent(place.title) // setting inner HTML of the marker
         .setPopupContent(this._createMarkerTitle(place)) // setting inner HTML of the marker
         .openPopup();
-      }
+    }
+
+    _moveToMarker(coords){
+        this.#map.setView(coords, this.#mapZoom); 
+    }
 
     //   metod to store data to localstorage
     _setToLocal(places){

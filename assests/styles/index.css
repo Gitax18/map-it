@@ -39,6 +39,7 @@ main{
     padding: 1rem;
     border-radius: 50%;
     z-index: 4;
+    cursor: pointer;
 }
 
 #icon-dashboard{
