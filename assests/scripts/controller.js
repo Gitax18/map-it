@@ -34,9 +34,7 @@ class Place{
 class App{
     #map;
     #mapZoom = 13;
-    #places = [];
-    #mapEvent;
-    
+    #places = [];    
     constructor() {
         this._getCurrentPosition()
 
@@ -85,7 +83,7 @@ class App{
         // adding click event to map
         this.#map.on('click', this._showForm.bind(this));
         
-        // render workout on map as a marker
+        // render marker on your location
         yourLocation = L.marker(coords) // generating marker on clicked coordinates
         .addTo(this.#map) // adding marker to map
         .bindPopup(L.popup({ // custominzing popup (i.e. marker)
@@ -98,6 +96,8 @@ class App{
         .setPopupContent(`You are Here`) // setting inner HTML of the marker
         .openPopup();
 
+        localStorage.setItem('current-coords', coords);
+
         // add event listner on your location
         yourLocation.on('click', ()=>{
             const title = prompt('add new title: ');
@@ -108,6 +108,7 @@ class App{
             yourLocation.setPopupContent(this._createMarkerTitle(newCurrMarker)).openPopup();
         });
         
+        this._getFromLocal();
     }
 
     // method to make form visible
@@ -157,9 +158,6 @@ class App{
 
         if(imageReaderURL === '') place = new Place(lat, lng, title.value, desc.value, '', date.value);
         else place = new Place(lat, lng, title.value, desc.value, imageReaderURL, date.value);
-        
-        console.log(place)
-
         this.#places.push(place);
         this.#map.setView(place.coords, this.#mapZoom)
         this.#places.forEach(place => this._renderMarker(place));
@@ -168,7 +166,7 @@ class App{
         image_holder.style.backgroundImage = `url('assests/images/t1.png')`;
 
         this._hideForm()
-
+        this._setToLocal(this.#places);
         
     }
 
@@ -217,6 +215,20 @@ class App{
         .setPopupContent(place.title) // setting inner HTML of the marker
         .setPopupContent(this._createMarkerTitle(place)) // setting inner HTML of the marker
         .openPopup();
+      }
+
+      _setToLocal(places){
+        const data = JSON.stringify(places)
+        localStorage.setItem('places', data)
+      }
+
+      _getFromLocal(){
+        const data = JSON.parse(localStorage.getItem('places'));
+
+        if (data != null){
+            this.#places = data;
+            this.#places.forEach(plc => this._renderMarker(plc));
+        } else console.log('No Places available');
       }
 }
 
