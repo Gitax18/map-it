@@ -56,7 +56,7 @@ main{
     color: white;
     padding: 2rem;
     padding-top: 4rem;
-    height: 55rem;
+    height: 59rem;
     border-radius: 1.6rem;
     display: flex;
     flex-direction: column;
@@ -103,7 +103,8 @@ main{
 }
 
 #title,
-#description{
+#description,
+#date{
     padding: .4rem .8rem;
     font-size: 1.6rem;
     border-radius: .8rem;
@@ -112,9 +113,11 @@ main{
 
 }
 
-#title{
+#title,
+#date{
     height: 4rem;
 }
+
 
 #description{
     resize: none;
@@ -122,12 +125,20 @@ main{
     height: 12rem;
 }
 
+.total-desc-length{
+    align-self: flex-end;
+    margin: .4rem 0 .8rem 0;
+}
+
+.total-desc-length::first-letter{
+    text-transform: uppercase;
+}
+
 .image{
     aspect-ratio: 1/1;
     height: 8rem;
     align-self: flex-start;
     background-color: #444;
-    /* background-image: url('../images/select\ icon.jpg'); */
     background-image: url('../images/t1.png');
     background-size: cover;
     background-repeat: no-repeat;
@@ -174,8 +185,8 @@ main{
 }
 
 .marker-image{
-    height: 100px;
-    width: 170px;
+    height: 130px;
+    width: 200px;
     background-repeat: no-repeat;
     background-size: cover;
 }
@@ -184,6 +195,7 @@ main{
     border-left: 5px solid var(--secondary);
     font-size: 1.2rem;
     font-weight: 600;
+    overflow: hidden;
 }
 
 .your-marker .leaflet-popup-content-wrapper{

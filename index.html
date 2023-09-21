@@ -19,7 +19,8 @@
     <script defer src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
     <!-- ionIcons -->
-    <script  src="https://unpkg.com/ionicons@latest/dist/ionicons.js"></script>
+    <!-- <script  src="https://unpkg.com/ionicons@latest/dist/ionicons.js"></script> -->
+    <script  defer type="module" src="https://unpkg.com/ionicons@latest/dist/ionicons/ionicons.esm.js"></script>
 
     <!-- google fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -39,9 +40,14 @@
                 <label for="title">title :</label>
                 <input type="text" name="title" id="title" pattern=".{15,}" required>
             </div>
+            <div class="date-placeholder placeholder">
+                <label for="date">date :</label>
+                <input type="date" name="date" id="date" required>
+            </div>
             <div class="desc-placeholder placeholder">
                 <label for="description">description :</label>
                 <textarea name="description" id="description" cols="30" rows="10" pattern=".{350,}" required></textarea>
+                <span class="total-desc-length">total words: <span id="current-length">0</span>/300</span>
             </div>
             <div class="place-image placeholder">
                 <label for="select-image">Select Image :</label>

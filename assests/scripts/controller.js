@@ -7,22 +7,27 @@ const selectedImage = document.querySelector('.image');
 const selectImageBtn = document.querySelector('#select-image');
 const imageInput = document.querySelector('#select-image');
 const image_holder = document.querySelector('.image');
+const descLimitIndicater = document.querySelector('#current-length');
 let imageReaderURL = '';
 let mapEvent;
 let yourLocation;
 
 
 class Place{
-    constructor(lat,lng,title, desc, imgPath){
+    constructor(lat, lng, title, desc, imgPath, date){
         this.coords = [lat, lng]
         this.title = title;
+        this.date = date;
         this.desc = desc;
         this.imgPath = imgPath;
+
+        this._setId(this.date);
     }
 
-    _setPopupTitle(){
-        this.popup_desc = `${this.title.slice(0, 25)}...`
+    _setId(date){
+        this.id = Number(date.slice(0,4)+date.slice(5,7)) + Math.floor(Math.random() * date.slice(0,4))  
     }
+
 }
 
 
@@ -36,7 +41,7 @@ class App{
         this._getCurrentPosition()
 
         // creating temporary image URL
-        const imageReaderURL = ""; 
+        // let imageReaderURL = ""; 
 
         formSubmit.addEventListener('click', this._newPlace.bind(this));
 
@@ -110,6 +115,13 @@ class App{
         this.mapEvent = mapClick;
         form.classList.remove('hidden');
         document.querySelector('#title').focus();
+
+        const desc = document.querySelector('#description');
+        setInterval(()=>{
+            const descValue = desc.value;
+            descLimitIndicater.textContent = `${descValue.length}`;
+            if(descValue.length > 300) desc.value = descValue.slice(0,300);
+        },100)
     }
     
     // method to make form invisible
@@ -134,49 +146,59 @@ class App{
         let place;
         let {lat, lng} = this.mapEvent.latlng;
         const title = document.querySelector('#title');
+        const date = document.querySelector('#date');
         const desc = document.querySelector('#description');
-        
-        if(title.value === '' || desc.value === ''){
+
+
+        if(title.value === '' || desc.value === '' || date.value === ''){
             alert('Please fill form correctly')
             return 
         }
 
-        if(imageReaderURL === '') place = new Place(lat, lng, title.value, desc.value, '');
-        else place = new Place(lat, lng, title.value, desc.value, imageReaderURL);
+        if(imageReaderURL === '') place = new Place(lat, lng, title.value, desc.value, '', date.value);
+        else place = new Place(lat, lng, title.value, desc.value, imageReaderURL, date.value);
         
+        console.log(place)
 
         this.#places.push(place);
-        console.log(this.#places);
-        title.value = desc.value =  lat = lng = '';
+        this.#map.setView(place.coords, this.#mapZoom)
+        this.#places.forEach(place => this._renderMarker(place));
 
+        title.value = desc.value = date.value =  lat = lng = imageReaderURL = '';
         image_holder.style.backgroundImage = `url('assests/images/t1.png')`;
 
         this._hideForm()
 
-        this.#places.forEach(place => this._renderMarker(place));
-        this.#map.setView(place.coords, this.#mapZoom)
+        
     }
 
     // method to create custom marker popup 
     _createMarkerTitle(place){
-        let desc, html;
+        let _desc, html, date;
 
-        if (place.desc.length > 15) desc = (place.desc).slice(0,15) + '...'
-        else desc = place.desc;
+        _desc = place.desc;
+        date = place.date
+        const date_year = date.slice(0,4);
+        const date_month = date.slice(5,7);
+        const date_date = date.slice(8,10);
+        const dt = date_date+'/'+date_month+'/'+date_year
 
         if(place.imgPath != ''){
             html = `
                 <h1 class="marker-title">${place.title}</h1>
-                <p>${desc}</p>
+                <hr>
+                <strong style="margin-bottom: 1rem; font-size: 1rem;">Date: ${dt}</strong>
+                <p style="width: 200px;">${_desc}</p>
                 <div class="marker-image" style="background: url(${place.imgPath});"></div>
-            `
-        }else{
-            html = `
+                `
+            }else{
+                html = `
                 <h1 class="marker-title">${place.title}</h1>
-                <p>${desc}</p>
+                <hr>
+                <strong style="margin-bottom: 1rem; font-size: 1rem;">Date: ${dt}</strong>
+                <p>${_desc}</p>
             `
         }
-        
         return html
     }
 
@@ -186,7 +208,7 @@ class App{
         L.marker(place.coords) // generating marker on clicked coordinates
         .addTo(this.#map) // adding marker to map
         .bindPopup(L.popup({ // custominzing popup (i.e. marker)
-            maxWidth: 380,
+            maxWidth: 200,
             minWidth: 100,
             className: 'place-marker',
             autoClose: false,
