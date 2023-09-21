@@ -1,13 +1,15 @@
 'use strict';
 
+// containers
 const form = document.querySelector('.form-container');
-const formClose = document.querySelector('#close-form');
-const formSubmit = document.querySelector('#btn-form-sub');
-const selectedImage = document.querySelector('.image');
-const selectImageBtn = document.querySelector('#select-image');
-const imageInput = document.querySelector('#select-image');
 const image_holder = document.querySelector('.image');
 const descLimitIndicater = document.querySelector('#current-length');
+
+// buttons
+const formClose = document.querySelector('#close-form');
+const formSubmit = document.querySelector('#btn-form-sub');
+const imageInput = document.querySelector('#select-image');
+
 let imageReaderURL = '';
 let mapEvent;
 let yourLocation;
@@ -50,8 +52,8 @@ class App{
         formClose.addEventListener('click', this._hideForm.bind(this));
 
         // selecting image on clicking it
-        selectedImage.addEventListener('click', ()=>{
-            selectImageBtn.click();
+        image_holder.addEventListener('click', ()=>{
+            imageInput.click();
         })
 
     }
@@ -96,9 +98,10 @@ class App{
         .setPopupContent(`You are Here`) // setting inner HTML of the marker
         .openPopup();
 
+        // adding current location to loaclstorage.
         localStorage.setItem('current-coords', JSON.stringify(coords));
 
-        // add event listner on your location
+        // add event listner on your location.
         yourLocation.on('click', ()=>{
             const title = prompt('add new title: ');
             const desc = prompt('add new desc: ');
@@ -108,10 +111,11 @@ class App{
             yourLocation.setPopupContent(this._createMarkerTitle(newCurrMarker)).openPopup();
         });
         
+        // getting data from localstorage.
         this._getFromLocal();
     }
 
-    // method to make form visible
+    // method to make form visible.
     _showForm(mapClick){    
         this.mapEvent = mapClick;
         form.classList.remove('hidden');
@@ -156,15 +160,22 @@ class App{
             return 
         }
 
+        // creating place object according to given data form form
         if(imageReaderURL === '') place = new Place(lat, lng, title.value, desc.value, '', date.value);
         else place = new Place(lat, lng, title.value, desc.value, imageReaderURL, date.value);
+
+        // pushing new place to main array and setting place direction to screen center
         this.#places.push(place);
         this.#map.setView(place.coords, this.#mapZoom)
+
+        // rendering new marker for the place
         this.#places.forEach(place => this._renderMarker(place));
 
+        // emptying the form
         title.value = desc.value = date.value =  lat = lng = imageReaderURL = '';
         image_holder.style.backgroundImage = `url('assests/images/t1.png')`;
 
+        // hiding the form and storing array to localstorage
         this._hideForm()
         this._setToLocal(this.#places);
         
@@ -217,19 +228,21 @@ class App{
         .openPopup();
       }
 
-      _setToLocal(places){
+    //   metod to store data to localstorage
+    _setToLocal(places){
         const data = JSON.stringify(places)
         localStorage.setItem('places', data)
-      }
+    }
 
-      _getFromLocal(){
+    // method to retrive data from localstorage
+    _getFromLocal(){
         const data = JSON.parse(localStorage.getItem('places'));
 
         if (data != null){
             this.#places = data;
             this.#places.forEach(plc => this._renderMarker(plc));
         } else console.log('No Places available');
-      }
+    }
 }
 
 // creating new app
