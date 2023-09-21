@@ -96,7 +96,7 @@ class App{
         .setPopupContent(`You are Here`) // setting inner HTML of the marker
         .openPopup();
 
-        localStorage.setItem('current-coords', coords);
+        localStorage.setItem('current-coords', JSON.stringify(coords));
 
         // add event listner on your location
         yourLocation.on('click', ()=>{
