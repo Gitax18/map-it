@@ -62,7 +62,7 @@ main{
     z-index: 3;
 }
 
-@media screen and (max-witdh: 490px) {
+@media screen and (max-width: 490px) {
     #map{
         height: 90vh;
     }
