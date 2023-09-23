@@ -69,15 +69,6 @@ class App{
             markerImageEnlarge.style.backgroundImage = '';
         })
 
-        // // selecting marker image and adding it to whole screen.
-        // const markerImages = document.querySelectorAll('.marker-image');
-        // console.log(markerImages)
-        // if(markerImages.length !== 0){
-        //     markerImages.forEach(img =>{
-        //         const bg = img.style.backgroundImage;
-        //         img.addEventListener('click', function(){ this._showEnlargeImage(bg)});
-        //     })
-        // }
 
     }
     
@@ -149,6 +140,8 @@ class App{
                 img.addEventListener('click', this._showEnlargeImage.bind(this, bg));
             })
         }
+
+        location.reload();
 
     }
 
