@@ -1,4 +1,5 @@
 'use strict';
+localStorage.clear()
 
 // containers
 const form = document.querySelector('.form-container');
@@ -53,7 +54,7 @@ class App{
         setTimeout(()=>{
             const yourLoc = JSON.parse(localStorage.getItem('current-coords'))
             myCurLocation.addEventListener('click', this._moveToMarker.bind(this,yourLoc))
-        },500);
+        },1000);
 
         // selecting image on clicking it
         image_holder.addEventListener('click', ()=>{

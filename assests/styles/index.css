@@ -48,16 +48,16 @@ main{
 }
 
 #icon-location{
-    bottom: 10rem;
+    bottom: 16rem;
 }
 
 #icon-map{
-    bottom: 3rem;
+    bottom: 10rem;
 }
 
 #map{
     position: relative;
-    height: 100svh;
+    height: 97vh;
     width: 100%;
     z-index: 3;
 }
