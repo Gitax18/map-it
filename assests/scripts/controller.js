@@ -1,5 +1,4 @@
 'use strict';
-localStorage.clear()
 
 // containers
 const form = document.querySelector('.form-container');
