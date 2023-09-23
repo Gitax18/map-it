@@ -33,6 +33,14 @@
         <!-- icon to open dashboard -->
         <ion-icon class="icon" id="icon-dashboard" name="grid-outline"></ion-icon>
 
+        <!-- popup for marker image (enlarger) -->
+        <section class="marker-image-container">
+            <ion-icon name="close-circle-outline" id="close-image"></ion-icon>
+            <div class="marker-image-enlarged">
+
+            </div>
+        </section>
+
         <!-- popup form for map to add place details -->
         <div class="form-container hidden" >
 
@@ -58,7 +66,7 @@
                     
                 </div>
                 <!-- <img src="" alt=""> -->
-                <input type="file" accept="image/jpg image/png" id="select-image"></input>
+                <input type="file" accept="image/*" id="select-image"></input>
             </div>
             <button type="submit" id="btn-form-sub">submit</button>
         </form>

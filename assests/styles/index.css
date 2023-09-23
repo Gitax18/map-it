@@ -62,6 +62,39 @@ main{
     z-index: 3;
 }
 
+.marker-image-container{
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #121212ec;
+    z-index: 6;
+    overflow: hidden;
+}
+
+#close-image{
+    position: absolute;
+    font-size: 5rem;
+    cursor: pointer;
+    top: 1rem;
+    right: 1rem;
+    color: #fff;
+}
+
+.marker-image-enlarged{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 80%;
+    width: 80%;
+    max-width: 100rem;
+    max-height: 60rem;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
 
 .form-container{
     height: 100vh;

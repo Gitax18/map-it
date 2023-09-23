@@ -4,12 +4,15 @@
 const form = document.querySelector('.form-container');
 const image_holder = document.querySelector('.image');
 const descLimitIndicater = document.querySelector('#current-length');
+const markerImageContainer = document.querySelector('.marker-image-container');
+const markerImageEnlarge = document.querySelector('.marker-image-enlarged');
 
 // buttons
 const formClose = document.querySelector('#close-form');
 const formSubmit = document.querySelector('#btn-form-sub');
 const imageInput = document.querySelector('#select-image');
 const myCurLocation = document.querySelector('#icon-location');
+const closeImage = document.querySelector('#close-image');
 
 let imageReaderURL = '';
 let mapEvent;
@@ -59,6 +62,22 @@ class App{
         image_holder.addEventListener('click', ()=>{
             imageInput.click();
         })
+
+        markerImageContainer.classList.add('hidden');
+        closeImage.addEventListener('click', ()=>{
+            markerImageContainer.classList.add('hidden');
+            markerImageEnlarge.style.backgroundImage = '';
+        })
+
+        // // selecting marker image and adding it to whole screen.
+        // const markerImages = document.querySelectorAll('.marker-image');
+        // console.log(markerImages)
+        // if(markerImages.length !== 0){
+        //     markerImages.forEach(img =>{
+        //         const bg = img.style.backgroundImage;
+        //         img.addEventListener('click', function(){ this._showEnlargeImage(bg)});
+        //     })
+        // }
 
     }
     
@@ -120,6 +139,17 @@ class App{
         
         // getting data from localstorage.
         this._getFromLocal();
+
+        // selecting marker image and adding it to whole screen.
+        const markerImages = document.querySelectorAll('.marker-image');
+        console.log(markerImages)
+        if(markerImages.length !== 0){
+            markerImages.forEach(img =>{
+                const bg = img.style.backgroundImage;
+                img.addEventListener('click', this._showEnlargeImage.bind(this, bg));
+            })
+        }
+
     }
 
     // method to make form visible.
@@ -134,6 +164,13 @@ class App{
             descLimitIndicater.textContent = `${descValue.length}`;
             if(descValue.length > 300) desc.value = descValue.slice(0,300);
         },100)
+    }
+
+    // making image enlarge on clicking it (marker image)
+    _showEnlargeImage(url){
+        const bg = url.slice(5,-2);
+        markerImageEnlarge.style.backgroundImage = `url(${bg})`;
+        markerImageContainer.classList.remove('hidden');
     }
     
     // method to make form invisible
