@@ -13,3 +13,50 @@ html{
     font-size: 62.5%;
     font-family: 'Poppins', sans-serif;
 }
+
+header{
+    display: flex;
+    height: 7rem;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    background-color: #1b1c1e;
+    padding-inline: 5rem;
+}
+
+.logo{
+    height: 5rem;
+}
+
+.primary-heading{
+    font-size: 4rem;
+    text-transform: uppercase;
+    letter-spacing: .75px;
+    color: #fffef4;
+}
+
+.link-back{
+    position: absolute ;
+    font-size: 1.6rem;
+    color: #fff;
+    font-weight: 600;
+    left: 4rem;
+    top: 8rem;
+    text-decoration: none;
+    letter-spacing: .75px;
+}
+
+.container{
+    background-color: #ffa751;
+    height: calc(100vh - 7rem);
+    display: flex;
+    /* align-items: center; */
+    /* justify-content: space-; */
+    gap: 4rem;
+    padding: 4rem;
+}
+
+.preview{
+    background-color: #444;
+    width: 40rem;
+}   
