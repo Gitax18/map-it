@@ -30,8 +30,9 @@ class Place{
         this._setId(this.date);
     }
 
-    _setId(date){
-        this.id = Number(date.slice(0,4)+date.slice(5,7)) + Math.floor(Math.random() * date.slice(0,4))  
+    _setId(){
+        const ranInt = Math.floor(new Date().getTime() / 100000);
+        this.id =   Math.floor(Math.random() * ((ranInt + ranInt * 2) - ranInt + 1)) + ranInt;  
     }
 
 }
@@ -141,7 +142,6 @@ class App{
             })
         }
 
-        location.reload();
 
     }
 
@@ -278,7 +278,6 @@ class App{
     // method to retrive data from localstorage
     _getFromLocal(){
         const data = JSON.parse(localStorage.getItem('places'));
-
         if (data != null){
             this.#places = data;
             this.#places.forEach(plc => this._renderMarker(plc));
