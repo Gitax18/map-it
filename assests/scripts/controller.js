@@ -119,11 +119,13 @@ class App{
 
         // add event listner on your location.
         yourLocation.on('click', ()=>{
-            const title = prompt('add new title: ');
-            const desc = prompt('add new desc: ');
+            const title_inp = prompt('add new title: ');
+            const desc_inp = prompt('add new desc: ');
 
             const date = new Date()
             const dt = `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,0)}-${date.getDate()}` ;
+            const title = title_inp.length != 0 ? title_inp : 'Your are here';
+            const desc = desc_inp.length != 0 ? desc_inp : '';
             const newCurrMarker = new Place(coords[0],coords[1], title, desc, '',dt);
         
             yourLocation.setPopupContent(this._createMarkerTitle(newCurrMarker)).openPopup();
